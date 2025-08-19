@@ -1,0 +1,78 @@
+﻿@* Modernized layout with Bootstrap and Font Awesome; keeps existing routes *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - URL Shortener</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <meta name="theme-color" content="#0d6efd" />
+</head>
+<body class="bg-body-tertiary">
+    <header class="shadow-sm bg-white">
+        <nav class="navbar navbar-expand-lg container">
+            <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="brand-icon d-inline-flex align-items-center justify-content-center">
+                    <i class="fas fa-link"></i>
+                </span>
+                <span>URL Shortener</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div id="mainNav" class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Url" asp-action="Index">
+                            <i class="fas fa-list me-1"></i>All URLs
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a asp-area="" asp-controller="Url" asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Create New
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        <section class="app-hero py-4 border-bottom">
+            <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div>
+                    <h1 class="h3 mb-1">@ViewData["Title"]</h1>
+                    <p class="text-secondary mb-0">Manage and track your short links with ease.</p>
+                </div>
+                <div class="text-md-end">
+                    <a asp-area="" asp-controller="Url" asp-action="Create" class="btn btn-outline-primary">
+                        <i class="fas fa-wand-magic-sparkles me-1"></i> New Short URL
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container py-4">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="border-top py-3 bg-white">
+        <div class="container text-center text-muted small">
+            © @DateTime.Now.Year URL Shortener ·
+            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

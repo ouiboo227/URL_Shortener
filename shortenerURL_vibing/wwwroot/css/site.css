@@ -1,0 +1,53 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* Subtle visual refresh, keeping Bootstrap in place */
+:root{
+    --brand: #0d6efd;
+    --brand-600: #0b5ed7;
+    --muted: #6c757d;
+}
+
+html, body { height: 100%; }
+
+.brand-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand), #5aa1ff);
+    color: #fff;
+}
+
+.app-hero { background: linear-gradient(180deg, rgba(13,110,253,0.06), rgba(13,110,253,0)); }
+
+.card { border-radius: 0.75rem; }
+.card-header { border-bottom: 1px solid rgba(0,0,0,.05); }
+
+.table thead th { font-weight: 600; }
+.table td, .table th { vertical-align: middle; }
+.table .text-truncate { max-width: 520px; }
+
+.badge.bg-subtle-primary { background-color: rgba(13,110,253,.12); }
+.bg-success-subtle { background-color: rgba(25,135,84,.12) !important; }
+.bg-danger-subtle  { background-color: rgba(220,53,69,.12) !important; }
+.bg-secondary-subtle { background-color: rgba(108,117,125,.12) !important; }
+
+.btn-outline-secondary:hover { background-color: rgba(108,117,125,.08); }
+.btn-outline-primary:hover { background-color: rgba(13,110,253,.08); }

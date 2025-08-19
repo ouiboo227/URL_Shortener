@@ -1,0 +1,73 @@
+@model shortenerURL_vibing.Models.UrlModel
+@{
+    ViewData["Title"] = "URL Details";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="fas fa-link me-2 text-primary"></i>URL Details</h4>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit me-1"></i>Edit</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash me-1"></i>Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Short URL</dt>
+                    <dd class="col-sm-9 d-flex align-items-center gap-2">
+                        <code class="text-primary-emphasis">@Model.ShortenedUrl</code>
+                        <button type="button" class="btn btn-outline-secondary btn-sm copy-btn" data-copy="@Model.ShortenedUrl">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                    </dd>
+
+                    <dt class="col-sm-3">Original URL</dt>
+                    <dd class="col-sm-9">
+                        <a href="@Model.OriginalUrl" target="_blank" rel="noopener noreferrer" class="link-primary">@Model.OriginalUrl</a>
+                    </dd>
+
+                    <dt class="col-sm-3">Created</dt>
+                    <dd class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                    <dt class="col-sm-3">Clicks</dt>
+                    <dd class="col-sm-9">@Model.ClickCount</dd>
+
+                    <dt class="col-sm-3">Custom Alias</dt>
+                    <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.CustomAlias) ? "-" : Model.CustomAlias)</dd>
+
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge bg-success-subtle text-success"><i class="fas fa-check me-1"></i>Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger-subtle text-danger"><i class="fas fa-ban me-1"></i>Inactive</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const copyBtn = document.querySelector(".copy-btn");
+        if (copyBtn) {
+            copyBtn.addEventListener("click", async () => {
+                const text = copyBtn.getAttribute("data-copy") ?? "";
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check text-success"></i> Copied';
+                    setTimeout(() => copyBtn.innerHTML = original, 1200);
+                } catch { /* ignore */ }
+            });
+        }
+    </script>
+}

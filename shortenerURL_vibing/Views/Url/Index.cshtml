@@ -1,0 +1,102 @@
+@model IEnumerable<shortenerURL_vibing.Models.UrlModel>
+@{
+    ViewData["Title"] = "All URLs";
+}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 mb-0"><i class="fas fa-list-ul me-2 text-primary"></i>All URLs</h2>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Create
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 22%">Short URL</th>
+                        <th>Original URL</th>
+                        <th style="width: 10%">Clicks</th>
+                        <th style="width: 16%">Created</th>
+                        <th style="width: 10%">Status</th>
+                        <th style="width: 18%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-truncate">
+                            <span class="badge bg-subtle-primary text-primary fw-normal me-2"><i class="fas fa-link me-1"></i>@item.ShortenedUrl</span>
+                            <button type="button" class="btn btn-link btn-sm text-decoration-none copy-btn" data-copy="@item.ShortenedUrl" title="Copy">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </td>
+                        <td class="text-truncate" style="max-width: 420px;">
+                            <a href="@item.OriginalUrl" class="link-primary text-truncate d-inline-block" style="max-width: 100%;" target="_blank" rel="noopener noreferrer">
+                                @item.OriginalUrl
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-secondary">
+                                <i class="fas fa-mouse-pointer me-1"></i>@item.ClickCount
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-muted">@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</span>
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success-subtle text-success"><i class="fas fa-check me-1"></i>Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger-subtle text-danger"><i class="fas fa-ban me-1"></i>Inactive</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".copy-btn").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const text = btn.getAttribute("data-copy") ?? "";
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check text-success"></i>';
+                    setTimeout(() => btn.innerHTML = original, 1200);
+                } catch {
+                    // Fallback: select and copy via prompt
+                    const input = document.createElement("input");
+                    input.value = text;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(input);
+                }
+            });
+        });
+    </script>
+}

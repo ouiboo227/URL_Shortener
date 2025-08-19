@@ -1,0 +1,50 @@
+@model shortenerURL_vibing.Models.UrlModel
+@{
+    ViewData["Title"] = "Create Short URL";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h4 class="mb-0"><i class="fas fa-link me-2 text-primary"></i>Create New Short URL</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="OriginalUrl" class="form-label"></label>
+                        <input asp-for="OriginalUrl" class="form-control" placeholder="https://example.com/very/long/link" />
+                        <span asp-validation-for="OriginalUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CustomAlias" class="form-label"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                            <input asp-for="CustomAlias" class="form-control" placeholder="optional-custom-alias" />
+                        </div>
+                        <div class="form-text">Leave empty to auto-generate.</div>
+                        <span asp-validation-for="CustomAlias" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label asp-for="IsActive" class="form-check-label"></label>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Save
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

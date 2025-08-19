@@ -1,0 +1,13 @@
+﻿*.user
+*.suo
+*.userosscache
+*.sln.docstates
+bin/
+obj/
+.vs/
+.idea/
+*.log
+logs/
+.env
+**/appsettings.*.json
+docker-data/
